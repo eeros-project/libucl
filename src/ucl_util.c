@@ -1855,6 +1855,18 @@ ucl_parser_add_file (struct ucl_parser *parser, const char *filename)
 			UCL_PARSE_UCL);
 }
 
+bool 
+ucl_parser_add_file_strategy(struct ucl_parser *parser,
+		const char *filename, enum ucl_duplicate_strategy strategy)
+{
+	  if(parser == NULL) {
+		return false;
+	  }
+	  
+	  return ucl_parser_add_file_full(parser, filename, 
+					  parser->default_priority, strategy, 
+					  UCL_PARSE_UCL);
+}
 
 bool
 ucl_parser_add_fd_full (struct ucl_parser *parser, int fd,

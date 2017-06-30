@@ -1059,6 +1059,17 @@ UCL_EXTERN bool ucl_parser_add_file_priority (struct ucl_parser *parser,
  * Load and add data from a file
  * @param parser parser structure
  * @param filename the name of file
+ * @param strategy Merge strategy to use while parsing this file
+ * @return true if chunk has been added and false in case of error
+ */
+
+UCL_EXTERN bool ucl_parser_add_file_strategy(struct ucl_parser *parser,
+		const char *filename, enum ucl_duplicate_strategy strategy);
+
+/**
+ * Load and add data from a file
+ * @param parser parser structure
+ * @param filename the name of file
  * @param priority the desired priority of a chunk (only 4 least significant bits
  * are considered for this parameter)
  * @param strat Merge strategy to use while parsing this file
