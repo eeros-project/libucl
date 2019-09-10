@@ -106,7 +106,7 @@ main (int argc, char **argv)
 	cur = ucl_object_fromstring ("Ебв"); /* UTF8 */
 	ucl_array_prepend (ar1, cur);
 /*
- * This is ususally broken or fragile as utf collate is far from perfect
+ * This is usually broken or fragile as utf collate is far from perfect
 	cur = ucl_object_fromstring ("ёбв");
 	ucl_array_prepend (ar1, cur);
 	cur = ucl_object_fromstring ("Ёбв"); // hello to @bapt
@@ -240,27 +240,36 @@ main (int argc, char **argv)
 	/* Test iteration */
 	it = ucl_object_iterate_new (obj);
 	it_obj = ucl_object_iterate_safe (it, true);
+	assert (!ucl_object_iter_chk_excpn (it));
 	/* key0 = 0.1 */
 	assert (ucl_object_type (it_obj) == UCL_FLOAT);
 	it_obj = ucl_object_iterate_safe (it, true);
+	assert (!ucl_object_iter_chk_excpn (it));
 	/* key1 = "" */
 	assert (ucl_object_type (it_obj) == UCL_STRING);
 	it_obj = ucl_object_iterate_safe (it, true);
+	assert (!ucl_object_iter_chk_excpn (it));
 	/* key2 = "" */
 	assert (ucl_object_type (it_obj) == UCL_STRING);
 	it_obj = ucl_object_iterate_safe (it, true);
+	assert (!ucl_object_iter_chk_excpn (it));
 	/* key3 = "" */
 	assert (ucl_object_type (it_obj) == UCL_STRING);
 	it_obj = ucl_object_iterate_safe (it, true);
+	assert (!ucl_object_iter_chk_excpn (it));
 	/* key4 = ([float, int, float], boolean) */
 	ucl_object_iterate_reset (it, it_obj);
 	it_obj = ucl_object_iterate_safe (it, true);
+	assert (!ucl_object_iter_chk_excpn (it));
 	assert (ucl_object_type (it_obj) == UCL_FLOAT);
 	it_obj = ucl_object_iterate_safe (it, true);
+	assert (!ucl_object_iter_chk_excpn (it));
 	assert (ucl_object_type (it_obj) == UCL_INT);
 	it_obj = ucl_object_iterate_safe (it, true);
+	assert (!ucl_object_iter_chk_excpn (it));
 	assert (ucl_object_type (it_obj) == UCL_FLOAT);
 	it_obj = ucl_object_iterate_safe (it, true);
+	assert (!ucl_object_iter_chk_excpn (it));
 	assert (ucl_object_type (it_obj) == UCL_BOOLEAN);
 	ucl_object_iterate_free (it);
 

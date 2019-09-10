@@ -1,6 +1,6 @@
 # LIBUCL
 
-[![Build Status](https://travis-ci.org/vstakhov/libucl.svg?branch=master)](https://travis-ci.org/vstakhov/libucl)
+[![CircleCI](https://circleci.com/gh/vstakhov/libucl.svg?style=svg)](https://circleci.com/gh/vstakhov/libucl)
 [![Coverity](https://scan.coverity.com/projects/4138/badge.svg)](https://scan.coverity.com/projects/4138)
 [![Coverage Status](https://coveralls.io/repos/github/vstakhov/libucl/badge.svg?branch=master)](https://coveralls.io/github/vstakhov/libucl?branch=master)
 
@@ -18,6 +18,7 @@
 	- [Macros support](#macros-support)
 	- [Variables support](#variables-support)
 	- [Multiline strings](#multiline-strings)
+	- [Single quoted strings](#single-quoted-strings)
 - [Emitter](#emitter)
 - [Validation](#validation)
 - [Performance](#performance)
@@ -331,6 +332,18 @@ some
 text
 
 EOD
+```
+
+### Single quoted strings
+
+It is possible to use single quoted strings to simplify escaping rules. All values passed in single quoted strings are *NOT* escaped, with two exceptions: a single `'` character just before `\` character, and a newline character just after `\` character that is ignored.
+
+```
+key = 'value'; # Read as value
+key = 'value\n\'; # Read as  value\n\
+key = 'value\''; # Read as value'
+key = 'value\
+bla'; # Read as valuebla
 ```
 
 ## Emitter
