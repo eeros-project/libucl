@@ -312,4 +312,4 @@ IF(ENABLE_UTILS MATCHES "ON")
     ADD_SUBDIRECTORY(utils)
 ENDIF()
 
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fPIC -g -std=gnu11 -Wformat=0")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fPIC -g -std=gnu11")
