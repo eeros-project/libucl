@@ -87,7 +87,7 @@ ucl_object_emit_streamline_new (const ucl_object_t *obj,
 	return (struct ucl_emitter_context *)sctx;
 }
 
-void
+bool
 ucl_object_emit_streamline_start_container (struct ucl_emitter_context *ctx,
 		const ucl_object_t *obj)
 {
@@ -103,21 +103,30 @@ ucl_object_emit_streamline_start_container (struct ucl_emitter_context *ctx,
 	top = sctx->containers;
 	st = malloc (sizeof (*st));
 	if (st != NULL) {
-		if (top != NULL && !top->is_array) {
+		st->empty = true;
+		if (top && !top->is_array) {
 			print_key = true;
 		}
-		st->empty = true;
+
 		st->obj = obj;
 		if (obj != NULL && obj->type == UCL_ARRAY) {
 			st->is_array = true;
-			sctx->ops->ucl_emitter_start_array (ctx, obj, print_key);
+			sctx->ops->ucl_emitter_start_array (ctx, obj, top == NULL, print_key);
+		}
+		else if (obj != NULL && obj->type == UCL_OBJECT) {
+			st->is_array = false;
+			sctx->ops->ucl_emitter_start_object (ctx, obj, top == NULL, print_key);
 		}
 		else {
-			st->is_array = false;
-			sctx->ops->ucl_emitter_start_object (ctx, obj, print_key);
+			/* API MISUSE */
+			free (st);
+
+			return false;
 		}
 		LL_PREPEND (sctx->containers, st);
 	}
+
+	return true;
 }
 
 void
